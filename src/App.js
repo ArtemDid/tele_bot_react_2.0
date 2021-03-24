@@ -10,19 +10,13 @@ import ShowPage from './components/ShowPage';
 function App() {
     return (
         <Provider store={store}>
-            <div className="container-fluid">
-                <BrowserRouter>
-                    <div className="row justify-content-center">
-                        <div className="col-10">
-                            <Switch>
-                                <Route exact path="/" component={Authorization} />
-                                <Route path="/showpage" component={ShowPage} />
-                                <Route path="/registration" component={Registration} />
-                            </Switch>
-                        </div>
-                    </div>
-                </BrowserRouter>
-            </div>
+            <BrowserRouter>
+                <Switch>
+                    <Route exact path="/" component={Authorization} />
+                    <Route path="/showpage" component={ShowPage} />
+                    <Route path="/registration" component={Registration} />
+                </Switch>
+            </BrowserRouter>
         </Provider>
     );
 }

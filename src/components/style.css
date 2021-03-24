@@ -2,4 +2,22 @@ html, body {
     margin: 0;
     font-family: 'Roboto', Arial, sans-serif;
     font-size: 1.1em;
+}
+
+.navbar {
+    background-color: #e3f2fd;
+}
+
+.table{
+    border: 2px solid rgb(73, 51, 151);
+}
+
+#container {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    width: 800px;
+    height: 800px;
+    background-color: #fff;
   }

@@ -1,154 +1,243 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React from "react";
+import ShowRates from './ShowRates';
 import $ from 'jquery';
 import './style.css';
 
 class TodoApp extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      todos: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'],
-      currentPage: 1,
-      todosPerPage: 3,
-      upperPageBound: 3,
-      lowerPageBound: 0,
-      isPrevBtnActive: 'disabled',
-      isNextBtnActive: '',
-      pageBound: 3
-    };
-    this.handleClick = this.handleClick.bind(this);
-    this.btnDecrementClick = this.btnDecrementClick.bind(this);
-    this.btnIncrementClick = this.btnIncrementClick.bind(this);
-    this.btnNextClick = this.btnNextClick.bind(this);
-    this.btnPrevClick = this.btnPrevClick.bind(this);
-    // this.componentDidMount = this.componentDidMount.bind(this);
-    this.setPrevAndNextBtnClass = this.setPrevAndNextBtnClass.bind(this);
-  }
-  componentDidUpdate() {
-    $("ul li.active").removeClass('active');
-    $('ul li#' + this.state.currentPage).addClass('active');
-  }
-  handleClick(event) {
-    let listid = Number(event.target.id);
-    this.setState({
-      currentPage: listid
-    });
-    $("ul li.active").removeClass('active');
-    $('ul li#' + listid).addClass('active');
-    this.setPrevAndNextBtnClass(listid);
-  }
-  setPrevAndNextBtnClass(listid) {
-    let totalPage = Math.ceil(this.state.todos.length / this.state.todosPerPage);
-    this.setState({ isNextBtnActive: 'disabled' });
-    this.setState({ isPrevBtnActive: 'disabled' });
-    if (totalPage === listid && totalPage > 1) {
-      this.setState({ isPrevBtnActive: '' });
+    constructor() {
+        super();
+        this.state = {
+            todos: [],
+            currentPage: 1,
+            todosPerPage: 5,
+            upperPageBound: 3,
+            lowerPageBound: 0,
+            isPrevBtnActive: 'disabled',
+            isNextBtnActive: '',
+            pageBound: 3
+        };
+        this.handleClick = this.handleClick.bind(this);
+        this.btnDecrementClick = this.btnDecrementClick.bind(this);
+        this.btnIncrementClick = this.btnIncrementClick.bind(this);
+        this.btnNextClick = this.btnNextClick.bind(this);
+        this.btnPrevClick = this.btnPrevClick.bind(this);
+        // this.componentDidMount = this.componentDidMount.bind(this);
+        this.setPrevAndNextBtnClass = this.setPrevAndNextBtnClass.bind(this);
     }
-    else if (listid === 1 && totalPage > 1) {
-      this.setState({ isNextBtnActive: '' });
-    }
-    else if (totalPage > 1) {
-      this.setState({ isNextBtnActive: '' });
-      this.setState({ isPrevBtnActive: '' });
-    }
-  }
-  btnIncrementClick() {
-    this.setState({ upperPageBound: this.state.upperPageBound + this.state.pageBound });
-    this.setState({ lowerPageBound: this.state.lowerPageBound + this.state.pageBound });
-    let listid = this.state.upperPageBound + 1;
-    this.setState({ currentPage: listid });
-    this.setPrevAndNextBtnClass(listid);
-  }
-  btnDecrementClick() {
-    this.setState({ upperPageBound: this.state.upperPageBound - this.state.pageBound });
-    this.setState({ lowerPageBound: this.state.lowerPageBound - this.state.pageBound });
-    let listid = this.state.upperPageBound - this.state.pageBound;
-    this.setState({ currentPage: listid });
-    this.setPrevAndNextBtnClass(listid);
-  }
-  btnPrevClick() {
-    if ((this.state.currentPage - 1) % this.state.pageBound === 0) {
-      this.setState({ upperPageBound: this.state.upperPageBound - this.state.pageBound });
-      this.setState({ lowerPageBound: this.state.lowerPageBound - this.state.pageBound });
-    }
-    let listid = this.state.currentPage - 1;
-    this.setState({ currentPage: listid });
-    this.setPrevAndNextBtnClass(listid);
-  }
-  btnNextClick() {
-    if ((this.state.currentPage + 1) > this.state.upperPageBound) {
-      this.setState({ upperPageBound: this.state.upperPageBound + this.state.pageBound });
-      this.setState({ lowerPageBound: this.state.lowerPageBound + this.state.pageBound });
-    }
-    let listid = this.state.currentPage + 1;
-    this.setState({ currentPage: listid });
-    this.setPrevAndNextBtnClass(listid);
-  }
-  render() {
-    const { todos, currentPage, todosPerPage, upperPageBound, lowerPageBound, isPrevBtnActive, isNextBtnActive } = this.state;
-    // Logic for displaying current todos
-    const indexOfLastTodo = currentPage * todosPerPage;
-    const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
-    const currentTodos = todos.slice(indexOfFirstTodo, indexOfLastTodo);
+    URL = "http://localhost:3001/";
+    ls = window.localStorage;
 
-    const renderTodos = currentTodos.map((todo, index) => {
-      return <li key={index}>{todo}</li>;
-    });
+    getTodos = (() => {
+        const email = localStorage.getItem(Object.keys(localStorage)[0]);
+        const password = localStorage.getItem(Object.keys(localStorage)[2]);
 
-    // Logic for displaying page numbers
-    const pageNumbers = [];
-    for (let i = 1; i <= Math.ceil(todos.length / todosPerPage); i++) {
-      pageNumbers.push(i);
+        console.log(email, password)
+        fetch(`${this.URL}login/auth`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-access-token': localStorage.getItem(Object.keys(localStorage)[1])
+            },
+            body: JSON.stringify({ email, password }),
+        })
+            .then(response => {
+                return response.json();
+            })
+            .then(async data => {
+                console.log(data);
+                if (data.success) {
+                    console.log('good')
+
+                    try {
+                        const response = await fetch(this.URL);
+                        const jsonData = await response.json();
+
+                        this.setState({ todos: jsonData });
+                    } catch (err) {
+                        console.error(err.message);
+                        let error = new Error("Not Found");
+                        error.httpError = 404;
+                        throw error;
+                    }
+                }
+                else {
+                    let error = new Error("Not Found");
+                    error.httpError = 404;
+                    throw error;
+                }
+
+
+            })
+            .catch(err => {
+                alert(err);
+                console.log("Not Found");
+            });
+
+
+    })();
+
+
+    componentDidUpdate() {
+        $("ul li.active").removeClass('active');
+        $('ul li#' + this.state.currentPage).addClass('active');
+    }
+    handleClick(event) {
+        let listid = Number(event.target.id);
+        this.setState({
+            currentPage: listid
+        });
+        $("ul li.active").removeClass('active');
+        $('ul li#' + listid).addClass('active');
+        this.setPrevAndNextBtnClass(listid);
+    }
+    setPrevAndNextBtnClass(listid) {
+        let totalPage = Math.ceil(this.state.todos.length / this.state.todosPerPage);
+        this.setState({ isNextBtnActive: 'disabled' });
+        this.setState({ isPrevBtnActive: 'disabled' });
+        if (totalPage === listid && totalPage > 1) {
+            this.setState({ isPrevBtnActive: '' });
+        } else if (listid === 1 && totalPage > 1) {
+            this.setState({ isNextBtnActive: '' });
+        } else if (totalPage > 1) {
+            this.setState({ isNextBtnActive: '' });
+            this.setState({ isPrevBtnActive: '' });
+        }
+    }
+    btnIncrementClick() {
+        this.setState({ upperPageBound: this.state.upperPageBound + this.state.pageBound });
+        this.setState({ lowerPageBound: this.state.lowerPageBound + this.state.pageBound });
+        let listid = this.state.upperPageBound + 1;
+        this.setState({ currentPage: listid });
+        this.setPrevAndNextBtnClass(listid);
+    }
+    btnDecrementClick() {
+        this.setState({ upperPageBound: this.state.upperPageBound - this.state.pageBound });
+        this.setState({ lowerPageBound: this.state.lowerPageBound - this.state.pageBound });
+        let listid = this.state.upperPageBound - this.state.pageBound;
+        this.setState({ currentPage: listid });
+        this.setPrevAndNextBtnClass(listid);
+    }
+    btnPrevClick() {
+        if ((this.state.currentPage - 1) % this.state.pageBound === 0) {
+            this.setState({ upperPageBound: this.state.upperPageBound - this.state.pageBound });
+            this.setState({ lowerPageBound: this.state.lowerPageBound - this.state.pageBound });
+        }
+        let listid = this.state.currentPage - 1;
+        this.setState({ currentPage: listid });
+        this.setPrevAndNextBtnClass(listid);
+    }
+    btnNextClick() {
+        if ((this.state.currentPage + 1) > this.state.upperPageBound) {
+            this.setState({ upperPageBound: this.state.upperPageBound + this.state.pageBound });
+            this.setState({ lowerPageBound: this.state.lowerPageBound + this.state.pageBound });
+        }
+        let listid = this.state.currentPage + 1;
+        this.setState({ currentPage: listid });
+        this.setPrevAndNextBtnClass(listid);
+    }
+    setCount(event) {
+        this.setState({ todosPerPage: event.target.value });
+        // localStorage.getItem(Object.keys(localStorage)[1])
     }
 
-    const renderPageNumbers = pageNumbers.map(number => {
-      if (number === 1 && currentPage === 1) {
+
+    render() {
+        const { todos, currentPage, todosPerPage, upperPageBound, lowerPageBound, isPrevBtnActive, isNextBtnActive } = this.state;
+        console.log(todos)
+
+        // Logic for displaying current todos
+        const indexOfLastTodo = currentPage * todosPerPage;
+        const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
+        const currentTodos = todos.slice(indexOfFirstTodo, indexOfLastTodo);
+
+        const renderTodos = currentTodos.map((todo, index) => {
+            return (<tr key={index} >
+                <th> {todo.id} </th>
+                <th> {todo.name} </th>
+                <th> {todo.query} </th>
+            </tr>)
+        });
+
+        // Logic for displaying page numbers
+        const pageNumbers = [];
+        for (let i = 1; i <= Math.ceil(todos.length / todosPerPage); i++) {
+            pageNumbers.push(i);
+        }
+
+        const renderPageNumbers = pageNumbers.map(number => {
+            if (number === 1 && currentPage === 1) {
+                return (<li key={number}
+                    className='page-item active'
+                    id={number} >
+                    < a href='#'
+                        className='btn btn-dark'
+                        id={number}
+                        onClick={this.handleClick} > {number}
+                    </a>
+                </li >
+                )
+            } else if ((number < upperPageBound + 1) && number > lowerPageBound) {
+                return (<li key={number}
+                    id={number} > < a href='#' className='btn btn-dark' id={number} onClick={this.handleClick} > {number} </a></li >
+                )
+            }
+        });
+        let pageIncrementBtn = null;
+        if (pageNumbers.length > upperPageBound) {
+            pageIncrementBtn = <li> <a href='#' className='btn btn-dark' onClick={this.btnIncrementClick} > &hellip; </a></li >
+        }
+        let pageDecrementBtn = null;
+        if (lowerPageBound >= 1) {
+            pageDecrementBtn = <li > < a href='#' className='btn btn-dark' onClick={this.btnDecrementClick} > &hellip; </a></li >
+        }
+        let renderPrevBtn = null;
+        if (isPrevBtnActive === 'disabled') {
+            renderPrevBtn = < li className={isPrevBtnActive} > < a href='#' className='btn btn-dark' > < span id="btnPrev" > Prev </span></a > </li>
+        } else {
+            renderPrevBtn = < li className={isPrevBtnActive} > < a href='#' className='btn btn-dark' id="btnPrev" onClick={this.btnPrevClick} > Prev </a></li >
+        }
+        let renderNextBtn = null;
+        if (isNextBtnActive === 'disabled') {
+            renderNextBtn = < li className={isNextBtnActive} > < a href='#' className='btn btn-dark' > < span id="btnNext" > Next </span></a > </li>
+        } else {
+            renderNextBtn = < li className={isNextBtnActive} > < a href='#' className='btn btn-dark' id="btnNext" onClick={this.btnNextClick} > Next </a></li >
+        }
+
         return (
-          <li key={number} className='btn page-item active' id={number}><a href='#' id={number} onClick={this.handleClick}>{number} </a></li>
-        )
-      }
-      else if ((number < upperPageBound + 1) && number > lowerPageBound) {
-        return (
-          <li key={number} id={number} className = 'btn'><a href='#' id={number} onClick={this.handleClick}>{number} </a></li>
-        )
-      }
-    });
-    let pageIncrementBtn = null;
-    if (pageNumbers.length > upperPageBound) {
-      pageIncrementBtn = <li className='btn'><a href='#' onClick={this.btnIncrementClick}> &hellip; </a></li>
+
+            <div className="container-fluid" >
+                <nav class="navbar navbar-light">
+                    <form class="container-fluid justify-content-end">
+                        <ShowRates todos={todos} />
+                        < a href='/' class="btn btn-outline-success me-2">Logout</a>
+                        <span class="navbar-text">
+                            {localStorage.getItem(Object.keys(localStorage)[0])}
+                        </span>
+                    </form>
+                </nav>
+                <table className="table mt-5 text-center" >
+                    <thead >
+                        <tr >
+                            <td width='10%' > ID </td>
+                            <td width='20%' > Name </td>
+                            <td > Query </td>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        {renderTodos}
+                    </tbody>
+                </table>
+                <ul className="pagination justify-content-end" >
+                    <input type="number" name="tentacles" min="1" max="10" defaultValue="5" onChange={(event) => this.setCount(event)} />
+                    {renderPrevBtn}
+                    {pageDecrementBtn}
+                    {renderPageNumbers}
+                    {pageIncrementBtn}
+                    {renderNextBtn}
+                </ul>
+            </div>
+        );
     }
-    let pageDecrementBtn = null;
-    if (lowerPageBound >= 1) {
-      pageDecrementBtn = <li className='btn'><a href='#' onClick={this.btnDecrementClick}> &hellip; </a></li>
-    }
-    let renderPrevBtn = null;
-    if (isPrevBtnActive === 'disabled') {
-      renderPrevBtn = <li className={isPrevBtnActive} className='btn'><span id="btnPrev"> Prev </span></li>
-    }
-    else {
-      renderPrevBtn = <li className={isPrevBtnActive} className='btn'><a href='#' id="btnPrev" onClick={this.btnPrevClick}> Prev </a></li>
-    }
-    let renderNextBtn = null;
-    if (isNextBtnActive === 'disabled') {
-      renderNextBtn = <li className={isNextBtnActive} className='btn'><span id="btnNext"> Next </span></li>
-    }
-    else {
-      renderNextBtn = <li className={isNextBtnActive} className='btn'><a href='#' id="btnNext" onClick={this.btnNextClick}> Next </a></li>
-    }
-    return (
-      <div className="container-fluid">
-        <ul className="justify-content-center">
-          {renderTodos}
-        </ul>
-        <ul className="pagination justify-content-center">
-          {renderPrevBtn}
-          {pageDecrementBtn}
-          {renderPageNumbers}
-          {pageIncrementBtn}
-          {renderNextBtn}
-        </ul>
-      </div>
-    );
-  }
 }
 
 

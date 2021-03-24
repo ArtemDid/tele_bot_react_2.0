@@ -2,9 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux'
 import store from '../store/store';
 import { NavLink } from 'react-router-dom';
-// import validator from 'validator';
-
-// import { createUser, assureAreEqual, assureRegPasswords } from '../Services/Services'
 
 import { CreateActionSetLogin, CreateActionPassword } from '../actions/actions'
 
