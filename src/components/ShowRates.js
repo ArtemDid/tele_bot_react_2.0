@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { useMeasure } from "react-use";
 import {
     CartesianGrid,
     Legend,
@@ -12,32 +11,32 @@ import {
 import './style.css';
 
 export const App = () => {
-    const [containerRef, { width: containerWidth }] = useMeasure();
+    // const [containerRef, { width: containerWidth }] = useMeasure();
     // The chart that we want to download the PNG for.
     const URL = "http://localhost:3001";
 
-
     const [dataRates, setdataRates] = useState([]);
+    const [rate, setCurrencyRates] = useState('USD');
 
-    const rate = "USD";
+    const Currency = ['AZN', 'BYN', 'CAD', 'CHF', 'CNY', 'CZK', 'DKK', 'EUR', 'GBP', 'GEL', 'HUF', 'ILS', 'JPY', 'KZT', 'MDL', 'NOK', 'PLZ', 'RUB', 'SEK', 'SGD', 'TMT', 'TRY', 'USD', 'UZS']
 
-    function auth(){
+    function rates() {
         fetch(`${URL}/rates`, {
             method: 'POST',
             headers: {
-               'Content-Type': 'application/json',
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({ rate }),
-         })
+        })
             .then(response => {
-               return response.json();
+                return response.json();
             })
             .then(data => {
-               console.log(data);
-               if (data.success) {
-                console.log(data.mas);
-                setdataRates(data.mas);
-               }
+                console.log(data, rate);
+                if (data.success) {
+                    console.log(data.mas);
+                    setdataRates(data.mas);
+                }
             })
             .catch(err => {
                 console.log(err.message);
@@ -48,27 +47,30 @@ export const App = () => {
 
     }
 
-    useEffect(() => {
-        auth();
-      }, []);
+    function currency(event) {
+        setCurrencyRates(event.target.value);
+        console.log(event.target.value)
+    }
+
+    const renderCurrency = Currency.map((item, index) => {
+        return (
+            <input  type='text' readOnly class="dropdown-item" value={item} key={index} onClick={(event) => currency(event)}/>
+        )
+    });
 
     return (
         <Fragment>
-            <a href="#myModal1" class="btn btn-primary" data-toggle="modal">Открыть модальное окно 1</a>
+            <a class="btn btn-primary" data-toggle="modal" data-target="#largeModal">Monitoring of courses </a>
 
-
-
-            <div id="myModal1" class="modal fade">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div id="largeModal" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h4 class="modal-title">Заголовок модального окна 1</h4>
+                            <h4 class="modal-title">Monitoring of courses of {rate}</h4>
                         </div>
                         <div class="modal-body">
-                            <div id="container" ref={containerRef}>
-                                <h2>recharts-to-png example with FileSaver</h2>
-                                <br />
+                            <div id="container" >
                                 <LineChart
                                     data={dataRates}
                                     height={300}
@@ -88,20 +90,21 @@ export const App = () => {
                                     />
                                     <Line type="monotone" dataKey="purchaseRate" stroke="#82ca9d" />
                                 </LineChart>
-                               <br />
-                                <p>Source</p>
-                                <embed
-                                    type="text/html"
-                                    src="https://codesandbox.io/embed/busy-lake-dyy8q?autoresize=1&fontsize=14&hidenavigation=1&theme=light&view=editor"
-                                    width={containerWidth}
-                                    height={600}
-                                />
-                            </div>
 
+                            </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-                            <button type="button" class="btn btn-primary" >Сохранить изменения</button>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <span class="sr-only">Currency</span>
+                                </button>
+                                <div class="dropdown-menu scrollable">
+                                    {renderCurrency}
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" onClick={() => rates()}>Show rates</button>
                         </div>
                     </div>
                 </div>

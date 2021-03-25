@@ -8,7 +8,7 @@ html, body {
     background-color: #e3f2fd;
 }
 
-.table{
+.table {
     border: 2px solid rgb(73, 51, 151);
 }
 
@@ -16,8 +16,18 @@ html, body {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    padding: 10px;
-    width: 800px;
-    height: 800px;
+    /* padding: 10px; */
+    /* width: 800px;
+    height: 800px; */
     background-color: #fff;
-  }
+}
+
+.dropdown-menu.scrollable {
+    height: auto;
+    max-height: 20em;
+    overflow-x: hidden;
+}
+
+.dropdown-item {
+    cursor: pointer;
+}

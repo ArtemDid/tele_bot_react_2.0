@@ -24,6 +24,7 @@ class TodoApp extends React.Component {
         // this.componentDidMount = this.componentDidMount.bind(this);
         this.setPrevAndNextBtnClass = this.setPrevAndNextBtnClass.bind(this);
     }
+    
     URL = "http://localhost:3001/";
     ls = window.localStorage;
 
@@ -32,7 +33,7 @@ class TodoApp extends React.Component {
         const password = localStorage.getItem(Object.keys(localStorage)[2]);
 
         console.log(email, password)
-        fetch(`${this.URL}login/auth`, {
+        fetch(`${this.URL}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -43,29 +44,18 @@ class TodoApp extends React.Component {
             .then(response => {
                 return response.json();
             })
-            .then(async data => {
-                console.log(data);
+            .then(data => {
                 if (data.success) {
+                    console.log(data);
                     console.log('good')
 
-                    try {
-                        const response = await fetch(this.URL);
-                        const jsonData = await response.json();
-
-                        this.setState({ todos: jsonData });
-                    } catch (err) {
-                        console.error(err.message);
-                        let error = new Error("Not Found");
-                        error.httpError = 404;
-                        throw error;
-                    }
+                    this.setState({ todos: data.rows });
                 }
                 else {
                     let error = new Error("Not Found");
                     error.httpError = 404;
                     throw error;
                 }
-
 
             })
             .catch(err => {
