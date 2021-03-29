@@ -50,7 +50,7 @@ class Authorization extends React.Component {
             console.log(data);
             if (data.success) {
                
-               if (this.ls != undefined) {
+               if (this.ls !== undefined) {
                   this.ls.setItem("login", email);
                   this.ls.setItem("password", password);
                   this.ls.setItem("token", data.token);

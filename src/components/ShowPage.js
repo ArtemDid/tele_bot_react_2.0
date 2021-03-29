@@ -1,5 +1,7 @@
 import React from "react";
 import ShowRates from './ShowRates';
+import TodayRates from './TodayRates';
+import { NavLink } from 'react-router-dom';
 import $ from 'jquery';
 import './style.css';
 
@@ -24,7 +26,7 @@ class TodoApp extends React.Component {
         // this.componentDidMount = this.componentDidMount.bind(this);
         this.setPrevAndNextBtnClass = this.setPrevAndNextBtnClass.bind(this);
     }
-    
+
     URL = "http://localhost:3001/";
     ls = window.localStorage;
 
@@ -68,6 +70,7 @@ class TodoApp extends React.Component {
 
 
     componentDidUpdate() {
+
         $("ul li.active").removeClass('active');
         $('ul li#' + this.state.currentPage).addClass('active');
     }
@@ -198,7 +201,9 @@ class TodoApp extends React.Component {
             <div className="container-fluid" >
                 <nav class="navbar navbar-light">
                     <form class="container-fluid justify-content-end">
-                        <ShowRates todos={todos} />
+                        <NavLink to="/showusers" className="btn btn-primary" activeClassName="active">Show Users</NavLink>
+                        <TodayRates />
+                        <ShowRates />
                         < a href='/' class="btn btn-outline-success me-2">Logout</a>
                         <span class="navbar-text">
                             {localStorage.getItem(Object.keys(localStorage)[0])}

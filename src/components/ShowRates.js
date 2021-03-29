@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 import {
     CartesianGrid,
     Legend,
@@ -11,8 +11,6 @@ import {
 import './style.css';
 
 export const App = () => {
-    // const [containerRef, { width: containerWidth }] = useMeasure();
-    // The chart that we want to download the PNG for.
     const URL = "http://localhost:3001";
 
     const [dataRates, setdataRates] = useState([]);
