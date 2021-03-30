@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 import './style.css';
 
-export const App = () => {
+const App = () => {
     const URL = "http://localhost:3001/rates/today";
 
     const [dataRates, setdataRates] = useState([]);
@@ -35,30 +35,30 @@ export const App = () => {
     const renderCurrency = dataRates.map((item, index) => {
         return (
             <tr key={index} >
-                <th class="text-primary"> {item.baseCurrency} </th>
-                <th class="text-success"> {item.currency} </th>
-                <th class="text-primary"> {item.saleRate?item.saleRate:item.saleRateNB} </th>
-                <th class="text-info"> {item.purchaseRate?item.purchaseRate:item.purchaseRateNB} </th>
+                <th className="text-primary"> {item.baseCurrency} </th>
+                <th className="text-success"> {item.currency} </th>
+                <th className="text-primary"> {item.saleRate?item.saleRate:item.saleRateNB} </th>
+                <th className="text-info"> {item.purchaseRate?item.purchaseRate:item.purchaseRateNB} </th>
             </tr>
         )
     });
 
     return (
         <Fragment>
-            <a class="btn btn-primary" data-toggle="modal" data-target="#largeModal2">Course for today </a>
+            <a className="btn btn-primary" data-toggle="modal" data-target="#largeModal2">Course for today </a>
 
-            <div id="largeModal2" class="modal fade" tabindex="-1" role="dialog">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h4 class="modal-title">Monitoring of course for today</h4>
+            <div id="largeModal2" className="modal fade" tabindex="-1" role="dialog">
+                <div className="modal-dialog modal-lg">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <button type="button" className="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 className="modal-title">Monitoring of course for today</h4>
                         </div>
-                        <div class="modal-body">
+                        <div className="modal-body">
                             <div id="container" >
                                 <table className="table text-center" >
                                     <thead >
-                                        <tr class="text-danger">
+                                        <tr className="text-danger">
                                             <td > baseCurrency </td>
                                             <td > currency </td>
                                             <td > saleRate </td>
@@ -72,9 +72,9 @@ export const App = () => {
 
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" onClick={() => rates()}>Show rates</button>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-primary" onClick={() => rates()}>Show rates</button>
                         </div>
                     </div>
                 </div>
