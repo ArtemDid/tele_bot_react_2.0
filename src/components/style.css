@@ -45,7 +45,7 @@ form .search {
 }
 
 .round {
-    border-radius: 50px;
+    border-radius: 50%;
     /* Радиус скругления */
     border: 3px solid rgb(15, 1, 221);
     /* Параметры рамки */

@@ -52,22 +52,22 @@ export const App = () => {
 
     const renderCurrency = Currency.map((item, index) => {
         return (
-            <input  type='text' readOnly class="dropdown-item" value={item} key={index} onClick={(event) => currency(event)}/>
+            <li><button class="dropdown-item" type="button" key={index} value={item} onClick={(event) => currency(event)}>{item}</button></li>
         )
     });
 
     return (
         <Fragment>
-            <a class="btn btn-primary" data-toggle="modal" data-target="#largeModal">Monitoring of courses </a>
+            <a className="btn btn-primary" data-toggle="modal" data-target="#largeModal">Monitoring of courses </a>
 
-            <div id="largeModal" class="modal fade" tabindex="-1" role="dialog">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h4 class="modal-title">Monitoring of courses of {rate}</h4>
+            <div id="largeModal" className="modal fade" tabindex="-1" role="dialog">
+                <div className="modal-dialog modal-lg">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <button type="button" className="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 className="modal-title">Monitoring of courses of {rate}</h4>
                         </div>
-                        <div class="modal-body">
+                        <div className="modal-body">
                             <div id="container" >
                                 <LineChart
                                     data={dataRates}
@@ -91,18 +91,18 @@ export const App = () => {
 
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                        <div className="modal-footer">
+                            <div className="dropdown">
+                                <button type="button" className="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
-                                    <span class="sr-only">Currency</span>
+                                    <span className="sr-only">Currency</span>
                                 </button>
-                                <div class="dropdown-menu scrollable">
+                                <ul className="dropdown-menu scrollable">
                                     {renderCurrency}
-                                </div>
+                                </ul>
                             </div>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" onClick={() => rates()}>Show rates</button>
+                            <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-primary" onClick={() => rates()}>Show rates</button>
                         </div>
                     </div>
                 </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import store from '../store/store';
 import { NavLink } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 import { CreateActionSetLogin, CreateActionPassword } from '../actions/actions'
 
@@ -69,8 +70,14 @@ class Registration extends React.Component {
                 .then(data => {
                     console.log(data);
                     this.setState({ loading: false });
-                    if (data.success)
+                    if (data.success) {
+                        Swal.fire(
+                            'Good job!',
+                            'You clicked the button!',
+                            'success'
+                        )
                         this.props.history.push('/');
+                    }
                     else this.setState({ message: data.message });
                 })
                 .catch(err => {
