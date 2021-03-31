@@ -45,27 +45,30 @@ export const App = () => {
 
     }
 
-    function currency(event) {
-        setCurrencyRates(event.target.value);
-        console.log(event.target.value)
+   function currency(currency) {
+    setCurrencyRates(currency);
+        console.log(currency);
     }
 
     const renderCurrency = Currency.map((item, index) => {
         return (
-            <li><button class="dropdown-item" type="button" key={index} value={item} onClick={(event) => currency(event)}>{item}</button></li>
+            // <li key={index} class="dropdown-item" onClick={() => currency(item)}>{item}</li>
+            <li key={index}><a class="dropdown-item" href="#" onClick={() => currency(item)}>{item}</a></li>
         )
     });
 
     return (
         <Fragment>
-            <a className="btn btn-primary" data-toggle="modal" data-target="#largeModal">Monitoring of courses </a>
+            <a className="btn btn-dark" data-toggle="modal" data-target="#largeModal">Monitoring of courses </a>
 
             <div id="largeModal" className="modal fade" tabindex="-1" role="dialog">
                 <div className="modal-dialog modal-lg">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <button type="button" className="close" data-dismiss="modal" aria-hidden="true">×</button>
                             <h4 className="modal-title">Monitoring of courses of {rate}</h4>
+                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"></span>
+                            </button>
                         </div>
                         <div className="modal-body">
                             <div id="container" >
@@ -91,19 +94,22 @@ export const App = () => {
 
                             </div>
                         </div>
-                        <div className="modal-footer">
-                            <div className="dropdown">
-                                <button type="button" className="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <span className="sr-only">Currency</span>
-                                </button>
-                                <ul className="dropdown-menu scrollable">
-                                    {renderCurrency}
-                                </ul>
-                            </div>
-                            <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary" onClick={() => rates()}>Show rates</button>
-                        </div>
+                        <nav class="navbar navbar-dark bg-dark">
+                            <form className="container-fluid justify-content-end">
+                                <div className="dropdown">
+                                    <button type="button" className="btn btn-dark dropdown-toggle " data-toggle="dropdown" id="dropdownMenuButton2"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <span className="sr-only">Currency</span>
+                                    </button>
+                                    <ul className="dropdown-menu scrollable dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                                        {renderCurrency}
+                                    </ul>
+                                </div>
+                                <button type="button" className="btn btn-dark" onClick={() => rates()}>Show rates</button>
+                                <button type="button" className="btn btn-dark" data-dismiss="modal">Close</button>
+                            </form>
+                        </nav>
+
                     </div>
                 </div>
             </div>

@@ -104,19 +104,22 @@ class Registration extends React.Component {
                     <input className="form-control" onChange={(event) => this.setPassword(event)} id="password" type="password" name="password" placeholder="••••••••" />
                 </div>
                 {!this.state.message ? null : <span style={{ color: "#D81313", fontSize: "12px" }}>{this.state.message}</span>}
-                <div className="d-flex p-2 justify-content-center">
-                    <div>
-                        <NavLink to="/" className="btn btn-primary" activeClassName="active" onClick={(event) => this.register(event)}>Sign up</NavLink>
-
+                <div className='btnnav'>
+                    <nav className="navbar navbar-light ">
+                        <form className="container-fluid justify-content-end">
                         <input
-                            className='btn btn-info'
+                            className="btn btn-outline-dark"
                             onChange={(event) => this.setImage(event)}
                             accept="image/*"
                             type="file"
                         />
-                    </div>
+                         <span className="navbar-text">
+                         {this.state.loading ? 'Retention...' : null}
+                        </span>
+                        <NavLink to="/" className="btn btn-outline-dark"  onClick={(event) => this.register(event)}>Sign up</NavLink>
+                        </form>
+                    </nav>
                 </div>
-                <label>{this.state.loading ? 'Retention...' : null}</label>
             </form>
 
         );

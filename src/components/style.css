@@ -4,30 +4,20 @@ html, body {
     font-size: 1.1em;
 }
 
-.navbar {
-    background-color: #e3f2fd;
-}
-
-.table {
-    border: 2px solid rgb(73, 51, 151);
-}
-
 #container {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    background-color: #fff;
+    background-color: rgb(219, 214, 214);
+    padding-left: 40px;
+    padding-right: 20px;
 }
 
 .dropdown-menu.scrollable {
     height: auto;
     max-height: 20em;
     overflow-x: hidden;
-}
-
-.dropdown-item {
-    cursor: pointer;
-    width: 100px;
+    min-width: 120px !important;
 }
 
 form .search {
@@ -52,4 +42,43 @@ form .search {
     box-shadow: 0 0 7px #666;
     /* Параметры тени */
     width: 50px;
+    /* src: url('/spinner.gif'); */
+}
+
+.container-fluid {
+    padding: 0px;
+    text-align: center;
+}
+
+.navbar-light{
+    background-color: tan;
+}
+
+.navbar-light .btn{
+    margin-left: 10px;
+}
+
+.navbar-light .dropdown-toggle{
+    margin-left: 0px;
+}
+
+
+.pagination li, input {
+    margin-right: 5px;
+}
+
+.modal-body {
+    padding: 0px;
+}
+
+.search {
+    padding: 0px;
+}
+
+.btnnav{
+    margin-top: 5px;
+}
+
+.navbar-light{
+    background-color: #899196;
 }

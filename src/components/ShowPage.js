@@ -145,9 +145,9 @@ class TodoApp extends React.Component {
 
         const renderTodos = currentTodos.map((todo, index) => {
             return (<tr key={index} >
-                <th> {todo.id} </th>
-                <th> {todo.name} </th>
-                <th> {todo.query} </th>
+                <th scope="row"> {todo.id} </th>
+                <td> {todo.name} </td>
+                <td> {todo.query} </td>
             </tr>)
         });
 
@@ -198,31 +198,33 @@ class TodoApp extends React.Component {
 
         return (
 
-            <div className="container-fluid" >
-                <nav class="navbar navbar-light">
-                    <form class="container-fluid justify-content-end">
-                        <NavLink to="/showusers" className="btn btn-primary" activeClassName="active">Show Users</NavLink>
-                        <TodayRates />
-                        <ShowRates />
-                        < a href='/' class="btn btn-outline-success me-2">Logout</a>
-                        <span class="navbar-text">
+            <div className="container-fluid bg-dark" >
+                <nav className="navbar navbar-light">
+                    <form className="container-fluid justify-content-end">
+                        <span className="navbar-text">
                             {localStorage.getItem(Object.keys(localStorage)[0])}
                         </span>
+                        <NavLink to="/showusers" className="btn btn-dark" activeClassName="active">Show Users</NavLink>
+                        <TodayRates />
+                        <ShowRates />
+                        < a href='/' className="btn btn-outline-success me-2">Logout</a>
                     </form>
                 </nav>
-                <table className="table mt-5 text-center" >
-                    <thead >
-                        <tr >
-                            <td width='10%' > ID </td>
-                            <td width='20%' > Name </td>
-                            <td > Query </td>
-                        </tr>
-                    </thead>
-                    <tbody >
-                        {renderTodos}
-                    </tbody>
-                </table>
-                <ul className="pagination justify-content-end" >
+                <div className='container '>
+                    <table className="table mt-5 text-center table-dark">
+                        <thead>
+                            <tr >
+                                <th scope="col"> # </th>
+                                <th scope="col"> Name </th>
+                                <th scope="col"> Query </th>
+                            </tr>
+                        </thead>
+                        <tbody >
+                            {renderTodos}
+                        </tbody>
+                    </table>
+                   </div>
+                <ul className="pagination justify-content-center" >
                     <input type="number" name="tentacles" min="1" max="10" defaultValue="5" onChange={(event) => this.setCount(event)} />
                     {renderPrevBtn}
                     {pageDecrementBtn}

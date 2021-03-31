@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import './style.css';
 
 const App = () => {
@@ -32,37 +32,43 @@ const App = () => {
 
     }
 
+    useEffect(() => {
+        rates();
+    }, [])
+
     const renderCurrency = dataRates.map((item, index) => {
         return (
             <tr key={index} >
-                <th className="text-primary"> {item.baseCurrency} </th>
-                <th className="text-success"> {item.currency} </th>
-                <th className="text-primary"> {item.saleRate?item.saleRate:item.saleRateNB} </th>
-                <th className="text-info"> {item.purchaseRate?item.purchaseRate:item.purchaseRateNB} </th>
+                <td > {item.baseCurrency} </td>
+                <td > {item.currency} </td>
+                <td > {item.saleRate ? item.saleRate : item.saleRateNB} </td>
+                <td > {item.purchaseRate ? item.purchaseRate : item.purchaseRateNB} </td>
             </tr>
         )
     });
 
     return (
         <Fragment>
-            <a className="btn btn-primary" data-toggle="modal" data-target="#largeModal2">Course for today </a>
+            <a className="btn btn-dark" data-toggle="modal" data-target="#largeModal2">Course for today </a>
 
             <div id="largeModal2" className="modal fade" tabindex="-1" role="dialog">
                 <div className="modal-dialog modal-lg">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <button type="button" className="close" data-dismiss="modal" aria-hidden="true">×</button>
                             <h4 className="modal-title">Monitoring of course for today</h4>
+                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"></span>
+                            </button>
                         </div>
                         <div className="modal-body">
                             <div id="container" >
-                                <table className="table text-center" >
+                                <table className="table table-hover table-dark text-center" >
                                     <thead >
-                                        <tr className="text-danger">
-                                            <td > baseCurrency </td>
-                                            <td > currency </td>
-                                            <td > saleRate </td>
-                                            <td > purchaseRate </td>
+                                        <tr>
+                                            <th scope="col"> baseCurrency </th>
+                                            <th scope="col"> currency </th>
+                                            <th scope="col"> saleRate </th>
+                                            <th scope="col"> purchaseRate </th>
                                         </tr>
                                     </thead>
                                     <tbody >
@@ -74,10 +80,10 @@ const App = () => {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary" onClick={() => rates()}>Show rates</button>
                         </div>
                     </div>
                 </div>
+
             </div>
 
         </Fragment>

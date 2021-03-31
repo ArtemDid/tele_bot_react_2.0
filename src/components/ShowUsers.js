@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom';
+import ImageLoader from 'react-imageloader';
 import './style.css';
 
 
@@ -8,7 +9,11 @@ const App = () => {
 
     var [source, setSource] = useState([]);
     var [searchTerm, setSearchTerm] = useState("");
+    var [imgLoad, setImg] = useState(false);
 
+    function preloader() {
+        return <img src="spinner.gif" />;
+    }
 
     const users = () => {
         fetch(`${URL}`, {
@@ -47,44 +52,57 @@ const App = () => {
         return source.filter(name => name.login.toLowerCase().includes(searchTerm.toLowerCase()))
     }
 
+    const handleImageLoaded = (e) => {
+        setImg(true)
+    }
+
     const renderCurrency = dynamicSearch().map((item, index) => {
         return (
             <tr key={index}>
-                <th className="text-primary"> {index + 1} </th>
-                <th className="text-success"> {item.login} </th>
-                <th> <img src={item.path} className="round"></img> </th>
+                <th scope="row"> {index + 1} </th>
+                <td> {item.login} </td>
+                {/* <td>
+                <ImageLoader className="round"
+    src={item.path ? item.path : 'https://via.placeholder.com/150/FFFF00/000000?Text=WebsiteBuilders.com'}
+    wrapper={React.createFactory('div')}
+    preloader={<div class="spinner-border text-primary" role="status"></div>}>
+    Image load failed!
+  </ImageLoader>
+  </td> */}
+                <td>
+                    <img src={item.path ? item.path : 'https://via.placeholder.com/150'} className="round" onLoad={(e) => handleImageLoaded(e)}></img>
+                    <div class="spinner-border text-primary" role="status" hidden={imgLoad}></div>
+                </td>
             </tr>
         )
     });
 
 
     return (
-        <div className='main'>
-            <NavLink to="/showpage" className="btn btn-primary" activeClassName="active">Main Page</NavLink>
-            <form>
-                <input type='text' className="search" value={searchTerm} onChange={(e) => editSearchTerm(e)} placeholder='Search for a login! &#128269;' />
-            </form>
+        <div className="container-fluid bg-dark" >
+            <nav className="navbar navbar-light">
+                <form className="container-fluid justify-content-end">
+                    <input type="search" aria-label="Search" value={searchTerm} onChange={(e) => editSearchTerm(e)} placeholder='Search for a login! &#128269;' />
+                    <NavLink to="/showpage" className="btn btn-dark" activeClassName="active">Back</NavLink>
+                </form>
+            </nav>
             <br></br>
-            <h3>These are the important names:</h3>
-            <div className="d-flex justify-content-center " >
-                <div className="p-2">
-                    <table className="table text-center" >
-                        <thead >
-                            <tr className="text-danger">
-                                <td > id </td>
-                                <td > login </td>
-                                <td > ava </td>
-                            </tr>
-                        </thead>
-                        <tbody >
-                            {renderCurrency}
-                        </tbody>
-                    </table>
-                </div>
+            <h3 class="text-white">These are the important names:</h3>
+            <div className='container'>
+                <table className="table mt-5 text-center table-dark">
+                    <thead >
+                        <tr>
+                            <th scope="col"> # </th>
+                            <th scope="col"> login </th>
+                            <th scope="col"> ava </th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        {renderCurrency}
+                    </tbody>
+                </table>
             </div>
-
         </div>
-
     );
 };
 

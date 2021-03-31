@@ -49,7 +49,7 @@ class Authorization extends React.Component {
          .then(data => {
             console.log(data);
             if (data.success) {
-               
+
                if (this.ls !== undefined) {
                   this.ls.setItem("login", email);
                   this.ls.setItem("password", password);
@@ -82,13 +82,21 @@ class Authorization extends React.Component {
                <input className="form-control" onChange={(event) => this.setPassword(event)} type="password" name="password" placeholder="••••••••" />
             </div>
             {!this.state.message ? null : <span style={{ color: "#D81313", fontSize: "12px" }}>{this.state.message}</span>}
-            <div className="d-flex justify-content-around">
+            {/* <div className="d-flex justify-content-around">
                <div className="p-2">
                   <NavLink to="/showpage" className="btn btn-primary" activeClassName="active" onClick={(event) => this.auth(event)}>Sign in</NavLink>
                </div>
                <div className="p-2">
                   <NavLink to="/registration" className="btn btn-primary" activeClassName="active">Sign up</NavLink>
                </div>
+            </div> */}
+            <div className='btnnav'>
+               <nav className="navbar navbar-light ">
+                  <form className="container-fluid justify-content-end">
+                     <NavLink to="/showpage" className="btn btn-outline-light" activeClassName="active" onClick={(event) => this.auth(event)}>Sign in</NavLink>
+                     <NavLink to="/registration" className="btn btn-outline-light" activeClassName="active">Sign up</NavLink>
+                  </form>
+               </nav>
             </div>
          </form>
 
