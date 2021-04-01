@@ -27,7 +27,7 @@ class TodoApp extends React.Component {
         this.setPrevAndNextBtnClass = this.setPrevAndNextBtnClass.bind(this);
     }
 
-    URL = "http://localhost:3001/";
+    URL = "https://68f716604b91.ngrok.io";
     ls = window.localStorage;
 
     getTodos = (() => {
