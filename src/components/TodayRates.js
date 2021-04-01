@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import './style.css';
 
 const App = () => {
-    const URL = "http://localhost:3001/rates/today";
+    const URL = "https://68f716604b91.ngrok.io/rates/today";
 
     const [dataRates, setdataRates] = useState([]);
 

@@ -11,7 +11,7 @@ import {
 import './style.css';
 
 export const App = () => {
-    const URL = "http://localhost:3001";
+    const URL = "https://68f716604b91.ngrok.io";
 
     const [dataRates, setdataRates] = useState([]);
     const [rate, setCurrencyRates] = useState('');

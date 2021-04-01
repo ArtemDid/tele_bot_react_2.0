@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom';
-import ImageLoader from 'react-imageloader';
 import './style.css';
 
 
 const App = () => {
-    const URL = "http://localhost:3001/users";
+    const URL = "https://68f716604b91.ngrok.io/users";
 
     var [source, setSource] = useState([]);
     var [searchTerm, setSearchTerm] = useState("");
