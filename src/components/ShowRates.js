@@ -14,11 +14,12 @@ export const App = () => {
     const URL = "http://localhost:3001";
 
     const [dataRates, setdataRates] = useState([]);
-    const [rate, setCurrencyRates] = useState('USD');
+    const [rate, setCurrencyRates] = useState('');
 
     const Currency = ['AZN', 'BYN', 'CAD', 'CHF', 'CNY', 'CZK', 'DKK', 'EUR', 'GBP', 'GEL', 'HUF', 'ILS', 'JPY', 'KZT', 'MDL', 'NOK', 'PLZ', 'RUB', 'SEK', 'SGD', 'TMT', 'TRY', 'USD', 'UZS']
 
-    function rates() {
+    function currency(rate) {
+        setCurrencyRates(rate);
         fetch(`${URL}/rates`, {
             method: 'POST',
             headers: {
@@ -45,14 +46,8 @@ export const App = () => {
 
     }
 
-   function currency(currency) {
-    setCurrencyRates(currency);
-        console.log(currency);
-    }
-
     const renderCurrency = Currency.map((item, index) => {
         return (
-            // <li key={index} class="dropdown-item" onClick={() => currency(item)}>{item}</li>
             <li key={index}><a class="dropdown-item" href="#" onClick={() => currency(item)}>{item}</a></li>
         )
     });
@@ -94,10 +89,10 @@ export const App = () => {
 
                             </div>
                         </div>
-                        <nav class="navbar navbar-dark bg-dark">
+                        <nav class="navbar ">
                             <form className="container-fluid justify-content-end">
                                 <div className="dropdown">
-                                    <button type="button" className="btn btn-dark dropdown-toggle " data-toggle="dropdown" id="dropdownMenuButton2"
+                                    <button type="button" className="btn btn-default dropdown-toggle " data-toggle="dropdown" id="dropdownMenuButton2"
                                         data-bs-toggle="dropdown" aria-expanded="false">
                                         <span className="sr-only">Currency</span>
                                     </button>
@@ -105,8 +100,7 @@ export const App = () => {
                                         {renderCurrency}
                                     </ul>
                                 </div>
-                                <button type="button" className="btn btn-dark" onClick={() => rates()}>Show rates</button>
-                                <button type="button" className="btn btn-dark" data-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
                             </form>
                         </nav>
 

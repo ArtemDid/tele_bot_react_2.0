@@ -94,13 +94,13 @@ class Registration extends React.Component {
 
         return (
             <form style={{ width: "500px", margin: "auto" }}>
-                <h2>Sign up</h2>
+                <h2 class="text-white">Sign up</h2>
                 <div className="form-group">
-                    <label htmlFor="email">Email address</label>
+                    <label class="text-white" htmlFor="email">Email address</label>
                     <input className="form-control" onChange={(event) => this.setLogin(event)} id="email" type="email" name="email" placeholder="name@example.com" />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="password">Password</label>
+                    <label class="text-white" htmlFor="password">Password</label>
                     <input className="form-control" onChange={(event) => this.setPassword(event)} id="password" type="password" name="password" placeholder="••••••••" />
                 </div>
                 {!this.state.message ? null : <span style={{ color: "#D81313", fontSize: "12px" }}>{this.state.message}</span>}

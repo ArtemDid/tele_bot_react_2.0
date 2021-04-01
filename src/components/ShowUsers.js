@@ -11,10 +11,6 @@ const App = () => {
     var [searchTerm, setSearchTerm] = useState("");
     var [imgLoad, setImg] = useState(false);
 
-    function preloader() {
-        return <img src="spinner.gif" />;
-    }
-
     const users = () => {
         fetch(`${URL}`, {
             method: 'GET',
@@ -52,7 +48,7 @@ const App = () => {
         return source.filter(name => name.login.toLowerCase().includes(searchTerm.toLowerCase()))
     }
 
-    const handleImageLoaded = (e) => {
+    const handleImageLoaded = () => {
         setImg(true)
     }
 
@@ -61,14 +57,6 @@ const App = () => {
             <tr key={index}>
                 <th scope="row"> {index + 1} </th>
                 <td> {item.login} </td>
-                {/* <td>
-                <ImageLoader className="round"
-    src={item.path ? item.path : 'https://via.placeholder.com/150/FFFF00/000000?Text=WebsiteBuilders.com'}
-    wrapper={React.createFactory('div')}
-    preloader={<div class="spinner-border text-primary" role="status"></div>}>
-    Image load failed!
-  </ImageLoader>
-  </td> */}
                 <td>
                     <img src={item.path ? item.path : 'https://via.placeholder.com/150'} className="round" onLoad={(e) => handleImageLoaded(e)}></img>
                     <div class="spinner-border text-primary" role="status" hidden={imgLoad}></div>
@@ -79,7 +67,7 @@ const App = () => {
 
 
     return (
-        <div className="container-fluid bg-dark" >
+        <div className="container-fluid" >
             <nav className="navbar navbar-light">
                 <form className="container-fluid justify-content-end">
                     <input type="search" aria-label="Search" value={searchTerm} onChange={(e) => editSearchTerm(e)} placeholder='Search for a login! &#128269;' />

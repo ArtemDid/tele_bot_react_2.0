@@ -72,24 +72,16 @@ class Authorization extends React.Component {
 
       return (
          <form style={{ width: "500px", margin: "auto" }}>
-            <h2>Sign in</h2>
+            <h2 class="text-white">Sign in</h2>
             <div className="form-group">
-               <label htmlFor="email">Email address</label>
+               <label class="text-white" htmlFor="email">Email address</label>
                <input className="form-control" onChange={(event) => this.setLogin(event)} type="email" id="email" placeholder="name@example.com" defaultValue={localStorage.getItem(Object.keys(localStorage)[0])} />
             </div>
             <div className="form-group">
-               <label htmlFor="password">Password</label>
+               <label class="text-white" htmlFor="password">Password</label>
                <input className="form-control" onChange={(event) => this.setPassword(event)} type="password" name="password" placeholder="••••••••" />
             </div>
             {!this.state.message ? null : <span style={{ color: "#D81313", fontSize: "12px" }}>{this.state.message}</span>}
-            {/* <div className="d-flex justify-content-around">
-               <div className="p-2">
-                  <NavLink to="/showpage" className="btn btn-primary" activeClassName="active" onClick={(event) => this.auth(event)}>Sign in</NavLink>
-               </div>
-               <div className="p-2">
-                  <NavLink to="/registration" className="btn btn-primary" activeClassName="active">Sign up</NavLink>
-               </div>
-            </div> */}
             <div className='btnnav'>
                <nav className="navbar navbar-light ">
                   <form className="container-fluid justify-content-end">

@@ -2,7 +2,11 @@ html, body {
     margin: 0;
     font-family: 'Roboto', Arial, sans-serif;
     font-size: 1.1em;
+    min-height: 100%;
+    background-color: #212529;
 }
+
+
 
 #container {
     -webkit-box-sizing: border-box;
@@ -54,8 +58,14 @@ form .search {
     background-color: tan;
 }
 
-.navbar-light .btn{
-    margin-left: 10px;
+.navbar .btn, .navbar-text{
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.navbar{
+    padding: 0px;
 }
 
 .navbar-light .dropdown-toggle{

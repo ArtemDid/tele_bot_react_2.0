@@ -198,7 +198,7 @@ class TodoApp extends React.Component {
 
         return (
 
-            <div className="container-fluid bg-dark" >
+            <div className="container-fluid" >
                 <nav className="navbar navbar-light">
                     <form className="container-fluid justify-content-end">
                         <span className="navbar-text">
@@ -210,7 +210,7 @@ class TodoApp extends React.Component {
                         < a href='/' className="btn btn-outline-success me-2">Logout</a>
                     </form>
                 </nav>
-                <div className='container '>
+                <div className='container'>
                     <table className="table mt-5 text-center table-dark">
                         <thead>
                             <tr >
