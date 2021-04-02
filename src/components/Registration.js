@@ -8,7 +8,7 @@ import { CreateActionSetLogin, CreateActionPassword } from '../actions/actions'
 
 class Registration extends React.Component {
 
-    URL = "https://68f716604b91.ngrok.io";
+    URL = "https://576031bbc0d2.ngrok.io";
 
     state = {
         message: "",
